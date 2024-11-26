@@ -2,6 +2,7 @@ import { httpRouter } from "convex/server";
 import { httpAction } from "./_generated/server";
 import { Webhook } from "svix"
 import { internal } from "./_generated/api";
+import { WebhookEvent } from '@clerk/nextjs/server'
 
 const validatePayload = async (req: Request): Promise<WebhookEvent | undefined> => {
     const payload = await req.text()
@@ -12,14 +13,18 @@ const validatePayload = async (req: Request): Promise<WebhookEvent | undefined> 
         "svix-signature": req.headers.get("svix-signature")!,
     }
 
+    
     const webhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET || "")
 
     try {
+        if (!process.env.CLERK_WEBHOOK_SECRET) {
+            throw new Error("CLERK_WEBHOOK_SECRET is not defined in environment variables.");
+        }
         const event = webhook.verify(payload, svixHeaders) as WebhookEvent
 
         return event
     } catch (error) {
-        console.error("Clerk webhook request could not be verified")
+        console.error("Clerk webhook request could not be verified", error)
         return
     }
 }
@@ -50,15 +55,22 @@ const handleClerkWebhook = httpAction(async (ctx, req) => {
                 email: event.data.email_addresses[0].email_address
             })
             break;
+        default: {
+            console.log("Clerk webhook event not supported", event.type)
+        }
     }
+    return new Response(null, {status: 200})
 })
 
 const http = httpRouter()
 
 http.route({
     path: "/clerk-users-webhook",
+    // path: "https://play.svix.com/in/e_JymABSdoGjsJpyYigsmas1kS9mi/",
     method: "POST",
     handler: handleClerkWebhook
 })
+
+// i dont see user in database after login
 
 export default http
