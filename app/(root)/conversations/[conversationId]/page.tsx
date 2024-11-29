@@ -1,11 +1,10 @@
-import React from 'react'
+import ConversationContainer from "@/components/shared/conversation/ConversationContainer";
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const ConversationsPage = (props: Props) => {
-  return (
-    <div>ConversationsPage</div>
-  )
-}
+  return <ConversationContainer>ConversationsPage</ConversationContainer>;
+};
 
-export default ConversationsPage
+export default ConversationsPage;
