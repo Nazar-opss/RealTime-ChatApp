@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/ui/theme/theme-toggle";
 import {
   TooltipTrigger,
   TooltipContent,
@@ -21,7 +22,7 @@ const MobileNav = () => {
   if (isActive) return null;
 
   return (
-    <Card className="fixed bottom w-[calc(100vw-32px)] flex items-center h-16 p-2 lg:hidden">
+    <Card className="fixed bottom-4 w-[calc(100vw-32px)] flex items-center h-16 p-2 lg:hidden">
       <nav className="w-full">
         <ul className="flex justify-evenly items-center">
           {paths.map((path, id) => {
@@ -45,6 +46,9 @@ const MobileNav = () => {
               </li>
             );
           })}
+          <li>
+            <ThemeToggle />
+          </li>
           <li>
             <UserButton />
           </li>
