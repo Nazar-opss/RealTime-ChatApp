@@ -4,6 +4,7 @@ import "./globals.css";
 import ConvexProviderCustom from "@/providers/ConvexProviderCustom";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ui/theme/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -39,6 +40,7 @@ export default function RootLayout({
         >
           <ConvexProviderCustom>
             <TooltipProvider>{children}</TooltipProvider>
+            <Toaster richColors/>
           </ConvexProviderCustom>
         </ThemeProvider>
       </body>
