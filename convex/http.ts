@@ -12,7 +12,6 @@ const validatePayload = async (req: Request): Promise<WebhookEvent | undefined> 
         "svix-timestamp": req.headers.get("svix-timestamp")!,
         "svix-signature": req.headers.get("svix-signature")!,
     }
-
     
     const webhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET || "")
 
@@ -66,11 +65,8 @@ const http = httpRouter()
 
 http.route({
     path: "/clerk-users-webhook",
-    // path: "https://play.svix.com/in/e_JymABSdoGjsJpyYigsmas1kS9mi/",
     method: "POST",
     handler: handleClerkWebhook
 })
-
-// i dont see user in database after login
 
 export default http

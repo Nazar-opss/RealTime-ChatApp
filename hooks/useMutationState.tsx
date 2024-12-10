@@ -10,10 +10,11 @@ export const useMutationState = (mutationToRun: any) => {
 
     return mutationFunc(payload)
       .then((res) => {
+        console.log(res, 'res')
         return res;
       })
       .catch((error) => {
-        throw error;
+        throw error; 
       })
       .finally(() => setPending(false));
   };
