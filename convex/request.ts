@@ -138,12 +138,16 @@ export const accept = mutation({
     await ctx.db.insert('friends', {
       user1: currentUser._id,
       user2: request.sender,
-      conversationId
+      conversationId,
     })
 
     await ctx.db.insert('conversationMembers', {
+      memberId: currentUser._id,
+      conversationId,
+    })
+    await ctx.db.insert('conversationMembers', {
       memberId: request.sender,
-      conversationId
+      conversationId,
     })
 
     await ctx.db.delete(request._id)
