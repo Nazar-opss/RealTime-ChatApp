@@ -9,7 +9,7 @@ type Props = { id: Id<"conversation">; imageUrl: string; username: string };
 
 function DMConversationItem({ id, imageUrl, username }: Props) {
   return (
-    <Link href={`/conversation/${id}`} className="w-full">
+    <Link href={`/conversations/${id}`} className="w-full">
       <Card className="p-2 flex flex-row items-center gap-4 truncate">
         <div className="flex flex-row items-center gap-4 truncate">
           <Avatar>
