@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+type Props = {};
 
 const Body = (props: Props) => {
   return (
-    <div>Body</div>
-  )
-}
+    <div className=" flex-1 w-full flex overflow-y-scroll flex-col-reverse gap-2 p-3 no-scrollbar">
+      Body
+    </div>
+  );
+};
 
-export default Body
+export default Body;
