@@ -22,6 +22,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "convex": "^1.17.0",
+    "date-fns": "^4.1.0",
     "dialog": "^0.3.1",
     "form": "^0.2.5",
     "input": "^1.0.1",

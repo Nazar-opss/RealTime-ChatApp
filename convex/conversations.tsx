@@ -59,4 +59,3 @@ export const get = query({
     return conversationWithDetails;
   },
 });
-// now showing block with convers

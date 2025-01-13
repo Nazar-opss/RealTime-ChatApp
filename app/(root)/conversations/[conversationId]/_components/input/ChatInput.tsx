@@ -17,6 +17,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 import TextareaAutosize from "react-textarea-autosize";
 import { useMutationState } from "@/hooks/useMutationState";
+import { Button } from "@/components/ui/button";
+import { SendHorizontal } from "lucide-react";
 
 type Props = {};
 
@@ -99,7 +101,10 @@ const ChatInput = (props: Props) => {
                   </FormItem>
                 );
               }}
-            ></FormField>
+            />
+            <Button disabled={pending} type='submit' size='icon'>
+              <SendHorizontal/>
+            </Button>
           </form>
         </Form>
       </div>
