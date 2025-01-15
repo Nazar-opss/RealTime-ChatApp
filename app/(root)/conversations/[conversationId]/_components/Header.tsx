@@ -13,7 +13,7 @@ const Header = ({ imageUrl, name }: Props) => {
   return (
     <Card className=" w-full flex rounded-lg items-center p-2 justify-between">
       <div className="div flex items-center gap-2">
-        <Link href="/conversation" className="block lg:hidden">
+        <Link href="/conversations" className="block lg:hidden">
           <CircleArrowLeft />
         </Link>
         <Avatar className="h-8 w-8">
