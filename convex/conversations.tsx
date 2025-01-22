@@ -44,7 +44,10 @@ export const get = query({
           )
           .collect();
 
-          const lastMessage = await getLastMessageDetails({ctx, id: conversation.lastMessageId})
+        const lastMessage = await getLastMessageDetails({
+          ctx,
+          id: conversation.lastMessageId,
+        });
 
         if (conversation.isGroup) {
           return { conversation, lastMessage };
