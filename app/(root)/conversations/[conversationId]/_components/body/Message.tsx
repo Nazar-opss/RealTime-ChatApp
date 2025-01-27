@@ -46,7 +46,7 @@ const Message = ({
           })}
         >
           {type === "text" ? (
-            <p className="text-wrap break-words whitespace-pre-wrap">
+            <p className="text-wrap break-words whitespace-pre-wrap break-all">
               {content}
             </p>
           ) : null}
@@ -67,10 +67,8 @@ const Message = ({
           invisible: lastByUser,
         })}
       >
-        <AvatarImage  src={senderImage}/>
-        <AvatarFallback>
-            {senderName.substring(0.1)}
-        </AvatarFallback>
+        <AvatarImage src={senderImage} />
+        <AvatarFallback>{senderName.substring(0.1)}</AvatarFallback>
       </Avatar>
     </div>
   );

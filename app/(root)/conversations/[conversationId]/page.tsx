@@ -9,6 +9,8 @@ import Header from "./_components/Header";
 import Body from "./_components/body/Body";
 import ChatInput from "./_components/input/ChatInput";
 import RemoveFriendDialog from "./_components/dialogs/RemoveFriendDialog";
+import DeleteGroupDialog from "./_components/dialogs/DeleteGroupDialog";
+import LeaveGroupDialog from "./_components/dialogs/LeaveGroupDialog";
 
 type Props = {
   params: {
@@ -20,15 +22,15 @@ const ConversationsPage = ({ params: { conversationId } }: Props) => {
   const conversation = useQuery(api.conversation.get, { id: conversationId });
 
   const [removeFriendDialogOpen, setRemoveFriendDialogOpen] = useState(false);
-  const [deleteFriendDialogOpen, setDeleteFriendDialogOpen] = useState(false);
-  const [leaveFriendDialogOpen, setLeaveFriendDialogOpen] = useState(false);
+  const [deleteGroupDialogOpen, setDeleteGroupDialogOpen] = useState(false);
+  const [leaveGroupDialogOpen, setLeaveGroupDialogOpen] = useState(false);
+
   return conversation === undefined ? (
     <div className="w-full h-full flex items-center justify-center">
       <Loader2 className="h-8 w-8" />
     </div>
   ) : conversation === null ? (
     <p className="w-full h-full flex items-center justify-center">
-      {" "}
       Conversation not found
     </p>
   ) : (
@@ -38,36 +40,46 @@ const ConversationsPage = ({ params: { conversationId } }: Props) => {
         open={removeFriendDialogOpen}
         setOpen={setRemoveFriendDialogOpen}
       />
+      <LeaveGroupDialog
+        conversationId={conversationId}
+        open={leaveGroupDialogOpen}
+        setOpen={setLeaveGroupDialogOpen}
+      />
+      <DeleteGroupDialog
+        conversationId={conversationId}
+        open={deleteGroupDialogOpen}
+        setOpen={setDeleteGroupDialogOpen}
+      />
       <Header
         imageUrl={
-          conversation.isGroup ? undefined : conversation.otherMember.imageUrl
+          conversation.isGroup ? undefined : conversation.otherMember?.imageUrl
         }
         name={
           (conversation.isGroup
             ? conversation.name
-            : conversation.otherMember.username) || ""
+            : conversation.otherMember?.username) || ""
         }
         options={
           conversation.isGroup
             ? [
                 {
-                  label: 'Leave group',
+                  label: "Leave group",
                   destructive: false,
-                  onClick: () => setLeaveFriendDialogOpen(true)
+                  onClick: () => setLeaveGroupDialogOpen(true),
                 },
                 {
-                  label: 'Delete group',
-                  destructive: false,
-                  onClick: () => setDeleteFriendDialogOpen(true)
+                  label: "Delete group",
+                  destructive: true,
+                  onClick: () => setDeleteGroupDialogOpen(true),
                 },
               ]
             : [
-              {
-                label: 'Remove friend',
-                destructive: true,
-                onClick: () => setRemoveFriendDialogOpen(true)
-              }
-            ]
+                {
+                  label: "Remove friend",
+                  destructive: true,
+                  onClick: () => setRemoveFriendDialogOpen(true),
+                },
+              ]
         }
       />
       <Body />

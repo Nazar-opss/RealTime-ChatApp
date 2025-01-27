@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import React, { PropsWithChildren } from "react";
 import DMConversationItem from "./_components/DMConversationItem";
 import CreateGroupDialog from "./_components/CreateGroupDialog";
+import GroupConversationItem from "./_components/GroupConverstaionItem";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = PropsWithChildren<{}>;
@@ -23,7 +24,15 @@ const ConversationsLayout = ({ children }: Props) => {
             </p>
           ) : (
             conversations.map((conversations) => {
-              return conversations.conversation.isGroup ? null : (
+              return conversations.conversation.isGroup ? (
+                <GroupConversationItem
+                  key={conversations.conversation._id}
+                  id={conversations.conversation._id}
+                  name={conversations.conversation.name || ""}
+                  lastMessageSender={conversations.lastMessage?.content}
+                  lastMessageContent={conversations.lastMessage?.sender}
+                />
+              ) : (
                 <DMConversationItem
                   key={conversations.conversation._id}
                   id={conversations.conversation._id}

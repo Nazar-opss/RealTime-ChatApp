@@ -21,12 +21,14 @@ type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-function RemoveFriendDialog({ conversationId, open, setOpen }: Props) {
-  const { mutate: removeFriend, pending } = useMutationState(api.friend.remove);
-  const handleRemoveFriend = async () => {
-    removeFriend({ conversationId })
+function DeleteGroupDialog({ conversationId, open, setOpen }: Props) {
+  const { mutate: deleteGroup, pending } = useMutationState(
+    api.conversation.deleteGroup
+  );
+  const handleRemoveGroup = async () => {
+    deleteGroup({ conversationId })
       .then(() => {
-        toast.success("Removed friend");
+        toast.success("Group deleted");
       })
       .catch((error) => {
         toast.error(
@@ -44,13 +46,8 @@ function RemoveFriendDialog({ conversationId, open, setOpen }: Props) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel
-            disabled={pending}
-            onClick={() => console.log(pending)}
-          >
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction disabled={pending} onClick={handleRemoveFriend}>
+          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
+          <AlertDialogAction disabled={pending} onClick={handleRemoveGroup}>
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -59,4 +56,4 @@ function RemoveFriendDialog({ conversationId, open, setOpen }: Props) {
   );
 }
 
-export default RemoveFriendDialog;
+export default DeleteGroupDialog;

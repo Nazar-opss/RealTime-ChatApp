@@ -33,7 +33,9 @@ const ChatInput = (props: Props) => {
 
   const { conversationId } = useConversation();
 
-  const { mutate: createMessage, pending } = useMutationState(api.message.create);
+  const { mutate: createMessage, pending } = useMutationState(
+    api.message.create
+  );
 
   const form = useForm<z.infer<typeof chatMessageSchema>>({
     resolver: zodResolver(chatMessageSchema),
@@ -50,6 +52,7 @@ const ChatInput = (props: Props) => {
     })
       .then(() => {
         form.reset();
+        textareaRef.current?.focus();
       })
       .catch((error) => {
         toast.error(
@@ -102,8 +105,8 @@ const ChatInput = (props: Props) => {
                 );
               }}
             />
-            <Button disabled={pending} type='submit' size='icon'>
-              <SendHorizontal/>
+            <Button disabled={pending} type="submit" size="icon">
+              <SendHorizontal />
             </Button>
           </form>
         </Form>
