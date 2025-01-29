@@ -11,6 +11,7 @@ type Props = {
   content: string[];
   createdAt: number;
   type: string;
+  seen?: React.ReactNode;
 };
 
 const Message = ({
@@ -21,6 +22,7 @@ const Message = ({
   content,
   createdAt,
   type,
+  seen,
 }: Props) => {
   const formateTime = (timestamp: number) => {
     return format(timestamp, "HH:mm");
@@ -59,6 +61,7 @@ const Message = ({
             {formateTime(createdAt)}
           </p>
         </div>
+        {seen}
       </div>
       <Avatar
         className={cn("relative w-8 h-8", {

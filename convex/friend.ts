@@ -4,7 +4,7 @@ import { getUserByClerkId } from "./_utils";
 
 export const remove = mutation({
   args: {
-    conversationId: v.id("conversation"), // or s
+    conversationId: v.id("conversation"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();

@@ -44,12 +44,7 @@ function RemoveFriendDialog({ conversationId, open, setOpen }: Props) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel
-            disabled={pending}
-            onClick={() => console.log(pending)}
-          >
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
           <AlertDialogAction disabled={pending} onClick={handleRemoveFriend}>
             Delete
           </AlertDialogAction>
