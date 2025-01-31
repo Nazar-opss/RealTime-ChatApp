@@ -70,6 +70,7 @@ export const get = query({
             }
 
             return {
+              _id: member._id,
               username: member.username,
             };
           })
