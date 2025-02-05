@@ -42,6 +42,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = {};
 
 const createGroupFormSchema = z.object({
@@ -52,6 +53,7 @@ const createGroupFormSchema = z.object({
     .min(1, { message: "You must select at least 1 friend" }),
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CreateGroupDialog = (props: Props) => {
   const friends = useQuery(api.friends.get);
 

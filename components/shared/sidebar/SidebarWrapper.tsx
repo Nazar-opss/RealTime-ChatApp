@@ -2,6 +2,7 @@ import React from "react";
 import DesktopNav from "./nav/DesktopNav";
 import MobileNav from "./nav/MobileNav";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = React.PropsWithChildren<{}>;
 
 const SidebarWrapper = ({ children }: Props) => {

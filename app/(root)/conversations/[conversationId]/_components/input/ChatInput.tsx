@@ -20,6 +20,7 @@ import { useMutationState } from "@/hooks/useMutationState";
 import { Button } from "@/components/ui/button";
 import { SendHorizontal } from "lucide-react";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = {};
 
 const chatMessageSchema = z.object({
@@ -28,6 +29,7 @@ const chatMessageSchema = z.object({
   }),
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ChatInput = (props: Props) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -61,6 +63,7 @@ const ChatInput = (props: Props) => {
       });
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleInputChange = (event: any) => {
     const { value, selectionStart } = event.target;
 
