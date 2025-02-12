@@ -1,14 +1,9 @@
 "use client";
 import LoaderLogo from "@/components/shared/LoaderLogo";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme/theme-toggle";
 // import { SignIn } from "@clerk/clerk-react";
-import {
-  ClerkProvider,
-  SignedOut,
-  SignIn,
-  SignInButton,
-  useAuth,
-} from "@clerk/nextjs";
+import { ClerkProvider, SignedOut, SignInButton, useAuth } from "@clerk/nextjs";
 import { Authenticated, AuthLoading, ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import Image from "next/image";
@@ -58,6 +53,9 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
         <SignedOut>
+          <div className="absolute" style={{ left: "16px", bottom: "16px" }}>
+            <ThemeToggle />
+          </div>
           <div className="flex flex-col items-center justify-center gap-4 h-full w-full">
             <Image
               src="/logo.svg"
@@ -70,8 +68,8 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
               appearance={{
                 variables: { colorPrimary: "#ea580c" },
                 elements: { rootBox: "mx-auto" },
-              }}
-            /> */}
+                }}
+                /> */}
             <SignInButton>
               <Button className="flex gap-4 px-4 py-4 text-sm font-bold rounded-md dark:hover:bg-background">
                 <GoogleLogo />
