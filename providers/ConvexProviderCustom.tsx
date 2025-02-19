@@ -7,7 +7,8 @@ import { ClerkProvider, SignedOut, SignInButton, useAuth } from "@clerk/nextjs";
 import { Authenticated, AuthLoading, ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import Image from "next/image";
-import React from "react";
+import React, { useRef } from "react";
+import { gsap } from "gsap";
 
 type Props = {
   children: React.ReactNode;
@@ -49,6 +50,16 @@ const GoogleLogo = (props: any) => (
 );
 
 const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
+  const banner = useRef(null);
+  const speed = 0.1;
+
+  const manageMouseMovement = (e) => {
+    const { movementX, movementY } = e;
+    gsap.set(banner.current, {
+      x: `+=${movementX * speed}`,
+      y: `+=${movementY * speed}`,
+    });
+  };
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
@@ -56,26 +67,49 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
           <div className="absolute" style={{ left: "16px", bottom: "16px" }}>
             <ThemeToggle />
           </div>
-          <div className="flex flex-col items-center justify-center gap-4 h-full w-full">
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              width={size}
-              height={size}
-              className="animate-pulse duration-1000"
-            />
-            {/* <SignIn
+          {/* <Image
+            src="/login_banner.svg"
+            alt="login banner"
+            width={size}
+            height={size}
+            className="bg-primary"
+          /> */}
+
+          <div className="flex items-center justify-evenly h-full w-full">
+            <div
+              className="flex justify-center items-center"
+              onMouseMove={(e) => manageMouseMovement(e)}
+              ref={banner}
+            >
+              <Image
+                src="/banner.svg"
+                alt="banner"
+                width={800}
+                height={800}
+                className=""
+              />
+            </div>
+            <div className="flex flex-col items-center justify-center gap-4">
+              <Image
+                src="/logo.svg"
+                alt="Logo"
+                width={size}
+                height={size}
+                className="animate-pulse duration-1000"
+              />
+              {/* <SignIn
               appearance={{
                 variables: { colorPrimary: "#ea580c" },
                 elements: { rootBox: "mx-auto" },
                 }}
                 /> */}
-            <SignInButton>
-              <Button className="flex gap-4 px-4 py-4 text-sm font-bold rounded-md dark:hover:bg-background">
-                <GoogleLogo />
-                <div>Sign in with Google</div>
-              </Button>
-            </SignInButton>
+              <SignInButton>
+                <Button className="flex gap-4 px-4 py-4 text-sm font-bold rounded-md dark:hover:bg-background">
+                  <GoogleLogo />
+                  <div>Sign in with Google</div>
+                </Button>
+              </SignInButton>
+            </div>
           </div>
         </SignedOut>
         <Authenticated>{children}</Authenticated>

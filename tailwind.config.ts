@@ -9,6 +9,10 @@ export default {
   ],
   theme: {
     extend: {
+      spacing: {
+        "72": "180px", // Adds gap-72
+        "84": "210px", // Adds gap-84
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
