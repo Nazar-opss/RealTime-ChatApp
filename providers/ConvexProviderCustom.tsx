@@ -81,7 +81,7 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
   const lerp = (start: number, end: number, amount: number) =>
     start * (1 - amount) + end * amount;
 
-  const manageMouseMovement = (e: MouseEvent) => {
+  const manageMouseMovement = (e: React.MouseEvent<HTMLElement>) => {
     const { movementX, movementY } = e;
     xForce += movementX * speed;
     yForce += movementY * speed;
