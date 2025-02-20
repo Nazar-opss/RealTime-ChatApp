@@ -21,6 +21,7 @@ const CLERK_PUBLISHABLE_KEY =
 
 const convex = new ConvexReactClient(CONVEX_URL);
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const GoogleLogo = (props: any) => (
   <svg
     width="24"
@@ -51,23 +52,56 @@ const GoogleLogo = (props: any) => (
 
 const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
   const banner = useRef(null);
-  const speed = 0.1;
+  const speed = 0.09;
+  let xForce = 0;
+  let yForce = 0;
+  let requestAnimationFrameId: number | null = null;
+  const easing = 0.08;
 
-  const manageMouseMovement = (e) => {
-    const { movementX, movementY } = e;
+  const animate = ({}) => {
+    xForce = lerp(xForce, 0, easing);
+    yForce = lerp(yForce, 0, easing);
     gsap.set(banner.current, {
-      x: `+=${movementX * speed}`,
-      y: `+=${movementY * speed}`,
+      x: `+=${xForce * speed}`,
+      y: `+=${yForce * speed}`,
     });
+
+    if (Math.abs(xForce) < 0.01) xForce = 0;
+    if (Math.abs(yForce) < 0.01) yForce = 0;
+
+    if (xForce > 0 || yForce > 0) {
+      requestAnimationFrame(animate);
+    } else {
+      cancelAnimationFrame(requestAnimationFrameId!);
+      console.log("animation stopped");
+      requestAnimationFrameId = null;
+    }
+  };
+
+  const lerp = (start: number, end: number, amount: number) =>
+    start * (1 - amount) + end * amount;
+
+  const manageMouseMovement = (e: MouseEvent) => {
+    const { movementX, movementY } = e;
+    xForce += movementX * speed;
+    yForce += movementY * speed;
+
+    if (!requestAnimationFrameId) {
+      requestAnimationFrameId = requestAnimationFrame(animate);
+    }
   };
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
       <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
         <SignedOut>
-          <div className="absolute" style={{ left: "16px", bottom: "16px" }}>
-            <ThemeToggle />
-          </div>
-          {/* <Image
+          <div
+            className="flex items-center justify-evenly h-full w-full"
+            onMouseMove={(e) => manageMouseMovement(e)}
+          >
+            <div className="absolute" style={{ left: "16px", bottom: "16px" }}>
+              <ThemeToggle />
+            </div>
+            {/* <Image
             src="/login_banner.svg"
             alt="login banner"
             width={size}
@@ -75,40 +109,36 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
             className="bg-primary"
           /> */}
 
-          <div className="flex items-center justify-evenly h-full w-full">
-            <div
-              className="flex justify-center items-center"
-              onMouseMove={(e) => manageMouseMovement(e)}
-              ref={banner}
-            >
+            <div className="flex items-center justify-evenly h-full w-full">
               <Image
                 src="/banner.svg"
                 alt="banner"
                 width={800}
                 height={800}
                 className=""
+                ref={banner}
               />
-            </div>
-            <div className="flex flex-col items-center justify-center gap-4">
-              <Image
-                src="/logo.svg"
-                alt="Logo"
-                width={size}
-                height={size}
-                className="animate-pulse duration-1000"
-              />
-              {/* <SignIn
+              <div className="flex flex-col items-center justify-center gap-4">
+                <Image
+                  src="/logo.svg"
+                  alt="Logo"
+                  width={size}
+                  height={size}
+                  className="animate-pulse duration-1000"
+                />
+                {/* <SignIn
               appearance={{
                 variables: { colorPrimary: "#ea580c" },
                 elements: { rootBox: "mx-auto" },
                 }}
                 /> */}
-              <SignInButton>
-                <Button className="flex gap-4 px-4 py-4 text-sm font-bold rounded-md dark:hover:bg-background">
-                  <GoogleLogo />
-                  <div>Sign in with Google</div>
-                </Button>
-              </SignInButton>
+                <SignInButton>
+                  <Button className="flex gap-4 px-4 py-4 text-sm font-bold rounded-md dark:hover:bg-background">
+                    <GoogleLogo />
+                    <div>Sign in with Google</div>
+                  </Button>
+                </SignInButton>
+              </div>
             </div>
           </div>
         </SignedOut>
