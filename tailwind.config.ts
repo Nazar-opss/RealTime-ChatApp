@@ -9,10 +9,10 @@ export default {
   ],
   theme: {
     extend: {
-      spacing: {
-        "72": "180px", // Adds gap-72
-        "84": "210px", // Adds gap-84
-      },
+      // spacing: {
+      //   "72": "180px", // Adds gap-72
+      //   "84": "210px", // Adds gap-84
+      // },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -62,5 +62,6 @@ export default {
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

@@ -11,15 +11,15 @@ import { api } from "@/convex/_generated/api";
 import { useConversation } from "@/hooks/useConversation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ConvexError } from "convex/values";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import TextareaAutosize from "react-textarea-autosize";
 import { useMutationState } from "@/hooks/useMutationState";
 import { Button } from "@/components/ui/button";
-import { SendHorizontal } from "lucide-react";
-
+import { SendHorizontal, SmilePlus } from "lucide-react";
+import EmojiPicker from "emoji-picker-react";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = {};
 
@@ -31,6 +31,7 @@ const chatMessageSchema = z.object({
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ChatInput = (props: Props) => {
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const { conversationId } = useConversation();
@@ -108,6 +109,18 @@ const ChatInput = (props: Props) => {
                 );
               }}
             />
+            {showEmojiPicker && (
+              <div className="absolute">
+                <EmojiPicker></EmojiPicker>
+              </div>
+            )}
+            <Button
+              disabled={pending}
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+              size="icon"
+            >
+              <SmilePlus />
+            </Button>
             <Button disabled={pending} type="submit" size="icon">
               <SendHorizontal />
             </Button>
