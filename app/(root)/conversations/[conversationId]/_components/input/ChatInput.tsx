@@ -73,6 +73,32 @@ const ChatInput = (props: Props) => {
     }
   };
 
+  const handleEmojiClick = (emojiObject: { emoji: string }) => {
+    const emoji = emojiObject.emoji;
+    const textarea = textareaRef.current;
+
+    console.log(textarea);
+
+    console.log(emoji);
+
+    // if (!textarea) return;
+
+    const start = textarea?.selectionStart;
+    const end = textarea?.selectionEnd;
+    const text = form.getValues("content");
+    console.log(text);
+
+    const newText = text.slice(0, start) + emoji + text.slice(end);
+
+    form.setValue("content", newText);
+    form.trigger("content");
+
+    // setTimeout(() => {
+    //   textarea?.focus();
+    //   textarea?.setSelectionRange(start + emoji.length, start + emoji.length);
+    // }, 0);
+  };
+
   return (
     <Card className="w-full p-2 rounded-lg relative">
       <div className="flex gap-2 items-end w-full">
@@ -98,6 +124,10 @@ const ChatInput = (props: Props) => {
                         rows={1}
                         maxRows={3}
                         {...field}
+                        ref={(element) => {
+                          field.ref(element);
+                          textareaRef.current = element;
+                        }}
                         onChange={handleInputChange}
                         onClick={handleInputChange}
                         placeholder="Type a message"
@@ -110,8 +140,12 @@ const ChatInput = (props: Props) => {
               }}
             />
             {showEmojiPicker && (
-              <div className="absolute">
-                <EmojiPicker></EmojiPicker>
+              <div className="absolute right-20 bottom-20">
+                <EmojiPicker
+                  searchDisabled={true}
+                  previewConfig={{ showPreview: false }}
+                  onEmojiClick={handleEmojiClick}
+                ></EmojiPicker>
               </div>
             )}
             <Button
