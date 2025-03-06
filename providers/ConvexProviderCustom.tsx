@@ -72,7 +72,7 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
             <div className="absolute" style={{ left: "16px", bottom: "16px" }}>
               <ThemeToggle />
             </div>
-            <div className="flex w-full justify-evenly h-full">
+            <div className="flex ">
               <Image
                 src="/banner.svg"
                 alt="banner"
@@ -81,7 +81,7 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
                 ref={banner}
               />
             </div>
-            <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex flex-col items-center gap-4">
               <Image
                 src="/logo.svg"
                 alt="Logo"

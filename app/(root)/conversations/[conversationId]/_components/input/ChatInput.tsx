@@ -20,6 +20,8 @@ import { useMutationState } from "@/hooks/useMutationState";
 import { Button } from "@/components/ui/button";
 import { SendHorizontal, SmilePlus } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
+import { Theme } from "emoji-picker-react";
+import { useTheme } from "next-themes";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = {};
 
@@ -31,6 +33,8 @@ const chatMessageSchema = z.object({
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ChatInput = (props: Props) => {
+  const { theme } = useTheme();
+  console.log(theme);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -140,8 +144,9 @@ const ChatInput = (props: Props) => {
               }}
             />
             {showEmojiPicker && (
-              <div className="absolute right-20 bottom-20">
+              <div className="absolute right-12 bottom-24">
                 <EmojiPicker
+                  theme={theme === "dark" ? Theme.DARK : Theme.LIGHT}
                   searchDisabled={true}
                   previewConfig={{ showPreview: false }}
                   onEmojiClick={handleEmojiClick}
