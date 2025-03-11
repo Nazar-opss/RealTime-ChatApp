@@ -29,8 +29,8 @@ const ConversationsLayout = ({ children }: Props) => {
                   key={conversations.conversation._id}
                   id={conversations.conversation._id}
                   name={conversations.conversation.name || ""}
-                  lastMessageSender={conversations.lastMessage?.content}
-                  lastMessageContent={conversations.lastMessage?.sender}
+                  lastMessageSender={conversations.lastMessage?.sender}
+                  lastMessageContent={conversations.lastMessage?.content}
                   unseenCount={conversations.unseenCount}
                 />
               ) : (
@@ -39,8 +39,8 @@ const ConversationsLayout = ({ children }: Props) => {
                   id={conversations.conversation._id}
                   username={conversations.otherMember?.username || ""}
                   imageUrl={conversations.otherMember?.imageUrl || ""}
-                  lastMessageSender={conversations.lastMessage?.content}
-                  lastMessageContent={conversations.lastMessage?.sender}
+                  lastMessageSender={conversations.lastMessage?.sender}
+                  lastMessageContent={conversations.lastMessage?.content}
                   unseenCount={conversations.unseenCount}
                 />
               );

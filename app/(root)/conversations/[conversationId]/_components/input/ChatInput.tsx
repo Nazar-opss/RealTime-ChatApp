@@ -18,10 +18,11 @@ import { z } from "zod";
 import TextareaAutosize from "react-textarea-autosize";
 import { useMutationState } from "@/hooks/useMutationState";
 import { Button } from "@/components/ui/button";
-import { SendHorizontal, SmilePlus } from "lucide-react";
+import { Loader2, SendHorizontal, SmilePlus } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
 import { Theme } from "emoji-picker-react";
 import { useTheme } from "next-themes";
+import { EmojiStyle } from "emoji-picker-react";
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 type Props = {};
 
@@ -34,7 +35,6 @@ const chatMessageSchema = z.object({
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ChatInput = (props: Props) => {
   const { theme } = useTheme();
-  console.log(theme);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -60,6 +60,7 @@ const ChatInput = (props: Props) => {
       .then(() => {
         form.reset();
         textareaRef.current?.focus();
+        setShowEmojiPicker(false);
       })
       .catch((error) => {
         toast.error(
@@ -104,8 +105,8 @@ const ChatInput = (props: Props) => {
   };
 
   return (
-    <Card className="w-full p-2 rounded-lg relative">
-      <div className="flex gap-2 items-end w-full">
+    <Card className="w-full p-2 rounded-lg">
+      <div className="flex gap-2 items-end w-full overflow-auto">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
@@ -135,7 +136,7 @@ const ChatInput = (props: Props) => {
                         onChange={handleInputChange}
                         onClick={handleInputChange}
                         placeholder="Type a message"
-                        className="min-h-full w-full resize-none border-0 outline-0 bg-card text-card-foreground placeholder:text-muted-foreground p-1.5"
+                        className="min-h-full w-full items-center flex resize-none border-0 outline-0 bg-card text-card-foreground placeholder:text-muted-foreground p-1.5"
                       />
                     </FormControl>
                     <FormMessage />
@@ -144,16 +145,25 @@ const ChatInput = (props: Props) => {
               }}
             />
             {showEmojiPicker && (
-              <div className="absolute right-12 bottom-24">
+              <div className="fixed right-4 bottom-24 lg:right-32 lg:bottom-8">
                 <EmojiPicker
-                  theme={theme === "dark" ? Theme.DARK : Theme.LIGHT}
+                  width={"100%"}
+                  theme={
+                    theme === "dark"
+                      ? Theme.DARK
+                      : theme === "light"
+                        ? Theme.LIGHT
+                        : Theme.AUTO
+                  }
                   searchDisabled={true}
                   previewConfig={{ showPreview: false }}
                   onEmojiClick={handleEmojiClick}
+                  emojiStyle={EmojiStyle.NATIVE}
                 ></EmojiPicker>
               </div>
             )}
             <Button
+              type="button"
               disabled={pending}
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
               size="icon"
@@ -161,7 +171,11 @@ const ChatInput = (props: Props) => {
               <SmilePlus />
             </Button>
             <Button disabled={pending} type="submit" size="icon">
-              <SendHorizontal />
+              {!pending ? (
+                <SendHorizontal />
+              ) : (
+                <Loader2 className="animate-spin" />
+              )}
             </Button>
           </form>
         </Form>
