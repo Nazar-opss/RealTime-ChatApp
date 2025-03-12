@@ -66,13 +66,13 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
       <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
         <SignedOut>
           <div
-            className="flex items-center justify-evenly h-full w-full"
+            className="flex flex-col items-center justify-evenly h-full w-full md:flex-col lg:flex-row"
             onMouseMove={(e) => manageMouseMovement(e)}
           >
             <div className="absolute" style={{ left: "16px", bottom: "16px" }}>
               <ThemeToggle />
             </div>
-            <div className="flex" style={{ width: "800px", height: "900px" }}>
+            <div className="flex items-center justify-center">
               <Image
                 src="/banner.svg"
                 alt="banner"
@@ -81,6 +81,7 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
                 ref={banner}
               />
             </div>
+
             <div className="flex flex-col items-center gap-4">
               <Image
                 src="/logo.svg"
@@ -89,6 +90,16 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
                 height={size}
                 className="animate-pulse duration-1000"
               />
+              <div className="w-1/2 flex flex-col text-center gap-2">
+                <p className="text-2xl lg:text-4xl font-bold">
+                  Welcome to RealTime
+                </p>
+                <p className="font-bold">Connect with people in real time</p>
+                <p className="font-thin">
+                  Use your Google account to sign in to the app and start
+                  chatting right now!
+                </p>
+              </div>
               {/* <SignIn
               appearance={{
                 variables: { colorPrimary: "#ea580c" },

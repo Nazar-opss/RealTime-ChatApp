@@ -6,13 +6,10 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./providers/**/*.{js,ts,jsx,tsx,mdx}", // can be deleted later
   ],
   theme: {
     extend: {
-      // spacing: {
-      //   "72": "180px", // Adds gap-72
-      //   "84": "210px", // Adds gap-84
-      // },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
