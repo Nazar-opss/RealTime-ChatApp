@@ -2,8 +2,7 @@
 import LoaderLogo from "@/components/shared/LoaderLogo";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme/theme-toggle";
-// import { SignIn } from "@clerk/clerk-react";
-import { ClerkProvider, SignedOut, SignInButton, useAuth } from "@clerk/nextjs";
+import { ClerkProvider, SignedOut, SignIn, SignInButton, useAuth } from "@clerk/nextjs";
 import { Authenticated, AuthLoading, ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import Image from "next/image";
@@ -100,12 +99,21 @@ const ConvexProviderCustom = ({ children, size = 100 }: Props) => {
                   chatting right now!
                 </p>
               </div>
-              {/* <SignIn
+              <div className="flex">
+              <p>
+                Demo Credentials:<br/>
+                email: <br/>
+                demopassword132@gmail.com<br/>
+                password: <br/>
+                demopassword132
+              </p>
+              <SignIn
               appearance={{
                 variables: { colorPrimary: "#ea580c" },
                 elements: { rootBox: "mx-auto" },
                 }}
-                /> */}
+                />
+              </div>
               <SignInButton>
                 <Button
                   variant={"outline"}

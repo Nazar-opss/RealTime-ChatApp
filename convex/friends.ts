@@ -23,27 +23,33 @@ export const get = query({
       .query("friends")
       .withIndex("by_user1", (q) => q.eq("user1", currentUser._id))
       .collect();
+      
     const friendships2 = await ctx.db
       .query("friends")
       .withIndex("by_user2", (q) => q.eq("user2", currentUser._id))
       .collect();
 
-    const friendship = [...friendships1, ...friendships2];
+    const allFriendships = [...friendships1, ...friendships2];
 
+    
     const friends = await Promise.all(
-      friendship.map(async (friendship) => {
-        const friend = await ctx.db.get(
-          friendship.user1 === currentUser._id
-            ? friendship.user2
-            : friendship.user1
-        );
+      allFriendships.map(async (friendship) => {
+        const friendId = friendship.user1 === currentUser._id 
+          ? friendship.user2 
+          : friendship.user1;
+
+        const friend = await ctx.db.get(friendId);
 
         if (!friend) {
           throw new ConvexError("Friend could not be found");
         }
-        return friend;
+        return {
+          friend,
+          conversationId: friendship.conversationId,
+        };
       })
     );
+    
     return friends;
   },
 });

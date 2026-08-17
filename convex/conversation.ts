@@ -4,7 +4,7 @@ import { getUserByClerkId } from "./_utils";
 
 export const get = query({
   args: {
-    id: v.id("conversation"),
+    id: v.string(),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -20,8 +20,13 @@ export const get = query({
     if (!currentUser) {
       throw new ConvexError("User not found");
     }
+    const normalizedId = ctx.db.normalizeId("conversation", args.id);
 
-    const conversation = await ctx.db.get(args.id);
+    if (!normalizedId) {
+      return null;
+    }
+
+    const conversation = await ctx.db.get(normalizedId);
 
     if (!conversation) {
       throw new ConvexError("Conversation not found");
@@ -40,7 +45,7 @@ export const get = query({
 
     const allConversationMemberships = await ctx.db
       .query("conversationMembers")
-      .withIndex("by_conversationId", (q) => q.eq("conversationId", args.id))
+      .withIndex("by_conversationId", (q) => q.eq("conversationId", normalizedId))
       .collect();
 
     if (!conversation.isGroup) {
