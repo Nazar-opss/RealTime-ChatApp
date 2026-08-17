@@ -73,9 +73,9 @@ const CreateGroupDialog = (props: Props) => {
 
   const unselectedFriends = useMemo(() => {
     return friends
-      ? friends.filter((friend) => !members.includes(friend._id))
+      ? friends.filter((friend) => !members.includes(friend.friend._id))
       : [];
-  }, [members.length, friends?.length]);
+  }, [friends, members]);
 
   const handleSubmit = async (
     values: z.infer<typeof createGroupFormSchema>
@@ -154,24 +154,24 @@ const CreateGroupDialog = (props: Props) => {
                           {unselectedFriends.map((friend) => {
                             return (
                               <DropdownMenuCheckboxItem
-                                key={friend._id}
+                                key={friend.friend._id}
                                 className="flex items-center gap-2 w-full p-2"
                                 onCheckedChange={(checked) => {
                                   if (checked) {
                                     form.setValue("members", [
                                       ...members,
-                                      friend._id,
+                                      friend.friend._id,
                                     ]);
                                   }
                                 }}
                               >
                                 <Avatar className="w-8 h-8">
-                                  <AvatarImage src={friend.imageUrl} />
+                                  <AvatarImage src={friend.friend.imageUrl} />
                                   <AvatarFallback>
-                                    {friend.username.substring(0, 1)}
+                                    {friend.friend.username.substring(0, 1)}
                                   </AvatarFallback>
                                 </Avatar>
-                                <h4 className="truncate">{friend.username}</h4>
+                                <h4 className="truncate">{friend.friend.username}</h4>
                               </DropdownMenuCheckboxItem>
                             );
                           })}
@@ -186,18 +186,18 @@ const CreateGroupDialog = (props: Props) => {
             {members && members.length ? (
               <Card className="flex items-center gap-3 overflow-x-auto w-full h-24 p-2 no-scrollbar">
                 {friends
-                  ?.filter((friend) => members.includes(friend._id))
+                  ?.filter((friend) => members.includes(friend.friend._id))
                   .map((friend) => {
                     return (
                       <div
-                        key={friend._id}
+                        key={friend.friend._id}
                         className="flex flex-col items-center gap-1"
                       >
                         <div className="relative">
                           <Avatar>
-                            <AvatarImage src={friend.imageUrl} />
+                            <AvatarImage src={friend.friend.imageUrl} />
                             <AvatarFallback>
-                              {friend.username.substring(0, 1)}
+                              {friend.friend.username.substring(0, 1)}
                             </AvatarFallback>
                           </Avatar>
                           <X
@@ -205,13 +205,13 @@ const CreateGroupDialog = (props: Props) => {
                             onClick={() =>
                               form.setValue(
                                 "members",
-                                members.filter((id) => id !== friend._id)
+                                members.filter((id) => id !== friend.friend._id)
                               )
                             }
                           />
                         </div>
                         <p className="truncate text-sm">
-                          {friend.username.split(" ")[0]}
+                          {friend.friend.username.split(" ")[0]}
                         </p>
                       </div>
                     );
